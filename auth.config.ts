@@ -4,7 +4,7 @@ import {LoginSchema} from "@/schemas/index"
 import {getUserByEmail} from "@/lib/data/user"
 import * as bcrypt from 'bcryptjs';
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import { PrismaClient } from "@prisma/client/edge"
+import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
