@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+enum AccountType {
+  User
+  Admin
+}
+
+model User {
+  id            String      @id @default(uuid())
+  name          String?
+  email         String?     @unique
+  emailVerified DateTime?
+  password      String?
+  image         String?
+  accounts      Account[]
+  role          AccountType @default(User)
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model invoices {
+  id          String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  customer_id String @default(uuid())
+  amount      Int
+  status      String @db.VarChar(255)
+  date        String //Да поебать мне, @db.Date не работает,уёбище
+}
+
+model customers {
+  id        String @id @db.Uuid
+  name      String @db.VarChar(255)
+  email     String @db.VarChar(255)
+  image_url String @db.VarChar(255)
+}
+
+model revenue {
+  month   String @unique @db.VarChar(4)
+  revenue Int
+}
