@@ -2,7 +2,7 @@
 import { LoginSchema, RegisterSchema } from '@/schemas/index';
 import bcrypt from "bcryptjs"
 import { z } from 'zod';
-import { db } from '../../next-playground/lib/db';
+import { db } from '@/lib/db';
 import { signIn } from '@/auth';
 import { DEFAUL_LOGIN_REDIRECT } from "@/routes"
 import { AuthError } from 'next-auth';
