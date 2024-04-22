@@ -38,3 +38,5 @@ export default NextAuth(authConfig).auth((req) => {
 export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 }
+
+export const runtime = "experimental-edge"
