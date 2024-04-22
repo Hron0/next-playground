@@ -1,6 +1,10 @@
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 import { getUserById } from "./lib/data/user";
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { PrismaClient } from "@prisma/client"
+
+globalThis.prisma ??= new PrismaClient()
 
 export const {
     handlers,
@@ -32,6 +36,7 @@ export const {
             return token
         }
     },
+    adapter: PrismaAdapter(globalThis.prisma),
     ...authConfig,
     session: { strategy: "jwt" },
     trustHost: true
