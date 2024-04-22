@@ -7,8 +7,9 @@ import {
   DEFAUL_LOGIN_REDIRECT
 } from "@/routes"
 import { NextResponse } from 'next/server';
+const {auth} = NextAuth(authConfig)
 
-export default NextAuth(authConfig).auth((req) => {
+export default auth((req) => {
   const { nextUrl } = req
   const isLoggedIn = !!req.auth
 
